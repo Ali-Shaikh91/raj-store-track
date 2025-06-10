@@ -1,13 +1,15 @@
 
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import OutOfStockList from './OutOfStockList';
 import StockWorkRecord from './StockWorkRecord';
+import LanguageSelector from './LanguageSelector';
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState<'outOfStock' | 'stockWork'>('outOfStock');
 
   return (
@@ -16,17 +18,20 @@ const Dashboard = () => {
       <div className="medical-gradient text-white p-4 shadow-lg">
         <div className="max-w-4xl mx-auto flex justify-between items-center">
           <div>
-            <h1 className="text-xl font-bold">Raj Medical & General Store</h1>
-            <p className="text-blue-100 text-sm">Welcome back, {user?.name}</p>
+            <h1 className="text-xl font-bold">{t('appTitle')}</h1>
+            <p className="text-blue-100 text-sm">{t('welcomeBack')}, {user?.name}</p>
           </div>
-          <Button 
-            onClick={logout}
-            variant="secondary"
-            size="sm"
-            className="bg-white/20 text-white hover:bg-white/30 border-0"
-          >
-            Logout
-          </Button>
+          <div className="flex items-center space-x-3">
+            <LanguageSelector />
+            <Button 
+              onClick={logout}
+              variant="secondary"
+              size="sm"
+              className="bg-white/20 text-white hover:bg-white/30 border-0"
+            >
+              {t('logout')}
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -39,10 +44,10 @@ const Dashboard = () => {
             className={`flex-1 rounded-xl ${
               activeTab === 'outOfStock' 
                 ? 'medical-gradient text-white' 
-                : 'bg-white text-gray-700 hover:bg-gray-50'
+                : 'bg-slate-700 text-slate-200 hover:bg-slate-600 border-slate-600'
             }`}
           >
-            Out of Stock
+            {t('outOfStock')}
           </Button>
           <Button
             onClick={() => setActiveTab('stockWork')}
@@ -50,10 +55,10 @@ const Dashboard = () => {
             className={`flex-1 rounded-xl ${
               activeTab === 'stockWork' 
                 ? 'medical-gradient text-white' 
-                : 'bg-white text-gray-700 hover:bg-gray-50'
+                : 'bg-slate-700 text-slate-200 hover:bg-slate-600 border-slate-600'
             }`}
           >
-            Stock Work
+            {t('stockWork')}
           </Button>
         </div>
 
