@@ -74,10 +74,10 @@ const StockWorkRecord = () => {
 
   const getActionColor = (action: string) => {
     switch (action) {
-      case 'added': return 'text-green-700 bg-green-50';
-      case 'removed': return 'text-red-700 bg-red-50';
-      case 'moved': return 'text-blue-700 bg-blue-50';
-      default: return 'text-gray-700 bg-gray-50';
+      case 'added': return 'text-green-300 bg-green-900/30';
+      case 'removed': return 'text-red-300 bg-red-900/30';
+      case 'moved': return 'text-blue-300 bg-blue-900/30';
+      default: return 'text-slate-300 bg-slate-700';
     }
   };
 
@@ -92,12 +92,12 @@ const StockWorkRecord = () => {
 
   return (
     <div className="space-y-4">
-      <Card className="card-shadow">
+      <Card className="card-shadow dark-card">
         <CardHeader>
           <div className="flex justify-between items-center">
             <div>
-              <CardTitle className="text-lg font-semibold text-gray-800">Stock Work Record</CardTitle>
-              <CardDescription>Track all stock movements and activities</CardDescription>
+              <CardTitle className="text-lg font-semibold text-slate-100">Stock Work Record</CardTitle>
+              <CardDescription className="text-slate-300">Track all stock movements and activities</CardDescription>
             </div>
             <Button
               onClick={() => setShowAddForm(!showAddForm)}
@@ -111,63 +111,63 @@ const StockWorkRecord = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           {showAddForm && (
-            <div className="p-4 bg-gray-50 rounded-xl space-y-4">
+            <div className="p-4 bg-slate-700 rounded-xl space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="itemName">Item Name</Label>
+                  <Label htmlFor="itemName" className="text-slate-200">Item Name</Label>
                   <Input
                     id="itemName"
                     placeholder="Enter item name"
                     value={newRecord.itemName}
                     onChange={(e) => setNewRecord({ ...newRecord, itemName: e.target.value })}
-                    className="rounded-xl"
+                    className="rounded-xl form-input"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="quantity">Quantity</Label>
+                  <Label htmlFor="quantity" className="text-slate-200">Quantity</Label>
                   <Input
                     id="quantity"
                     type="number"
                     placeholder="Enter quantity"
                     value={newRecord.quantity}
                     onChange={(e) => setNewRecord({ ...newRecord, quantity: e.target.value })}
-                    className="rounded-xl"
+                    className="rounded-xl form-input"
                   />
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="action">Action</Label>
+                  <Label htmlFor="action" className="text-slate-200">Action</Label>
                   <Select value={newRecord.action} onValueChange={(value: 'added' | 'removed' | 'moved') => setNewRecord({ ...newRecord, action: value })}>
-                    <SelectTrigger className="rounded-xl">
+                    <SelectTrigger className="rounded-xl bg-slate-700 border-slate-600 text-slate-100">
                       <SelectValue placeholder="Select action" />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="added">Added to Stock</SelectItem>
-                      <SelectItem value="removed">Removed from Stock</SelectItem>
-                      <SelectItem value="moved">Stock Moved</SelectItem>
+                    <SelectContent className="bg-slate-700 border-slate-600">
+                      <SelectItem value="added" className="text-slate-100 hover:bg-slate-600">Added to Stock</SelectItem>
+                      <SelectItem value="removed" className="text-slate-100 hover:bg-slate-600">Removed from Stock</SelectItem>
+                      <SelectItem value="moved" className="text-slate-100 hover:bg-slate-600">Stock Moved</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="date">Date</Label>
+                  <Label htmlFor="date" className="text-slate-200">Date</Label>
                   <Input
                     id="date"
                     type="date"
                     value={newRecord.date}
                     onChange={(e) => setNewRecord({ ...newRecord, date: e.target.value })}
-                    className="rounded-xl"
+                    className="rounded-xl form-input"
                   />
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="notes">Notes (Optional)</Label>
+                <Label htmlFor="notes" className="text-slate-200">Notes (Optional)</Label>
                 <Textarea
                   id="notes"
                   placeholder="Additional notes about this stock activity..."
                   value={newRecord.notes}
                   onChange={(e) => setNewRecord({ ...newRecord, notes: e.target.value })}
-                  className="rounded-xl"
+                  className="rounded-xl form-input"
                 />
               </div>
               <div className="flex space-x-2">
@@ -177,7 +177,7 @@ const StockWorkRecord = () => {
                 <Button 
                   onClick={() => setShowAddForm(false)} 
                   variant="outline"
-                  className="rounded-xl"
+                  className="rounded-xl bg-slate-600 text-slate-200 border-slate-500 hover:bg-slate-500"
                 >
                   Cancel
                 </Button>
@@ -186,35 +186,35 @@ const StockWorkRecord = () => {
           )}
 
           {records.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-slate-300">
               <p>No stock records yet</p>
               <p className="text-sm">Start tracking your stock activities</p>
             </div>
           ) : (
             <div className="space-y-3">
               {records.map((record) => (
-                <div key={record.id} className="p-4 bg-white border border-gray-200 rounded-xl">
+                <div key={record.id} className="p-4 bg-slate-700 border border-slate-600 rounded-xl">
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
-                        <h3 className="font-medium text-gray-800">{record.itemName}</h3>
+                        <h3 className="font-medium text-slate-100">{record.itemName}</h3>
                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${getActionColor(record.action)}`}>
                           {getActionText(record.action)}
                         </span>
                       </div>
-                      <div className="flex items-center gap-4 text-sm text-gray-600">
+                      <div className="flex items-center gap-4 text-sm text-slate-300">
                         <span>Quantity: {record.quantity}</span>
                         <span>Date: {record.date}</span>
                       </div>
                       {record.notes && (
-                        <p className="text-sm text-gray-500 mt-2">{record.notes}</p>
+                        <p className="text-sm text-slate-400 mt-2">{record.notes}</p>
                       )}
                     </div>
                     <Button
                       onClick={() => handleDeleteRecord(record.id)}
                       variant="outline"
                       size="sm"
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                      className="text-red-400 hover:text-red-300 hover:bg-red-900/20 border-red-600"
                     >
                       <Trash className="w-4 h-4" />
                     </Button>
